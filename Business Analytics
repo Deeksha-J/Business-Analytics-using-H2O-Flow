@@ -1,0 +1,97 @@
+{
+  "version": "1.0.0",
+  "cells": [
+    {
+      "type": "cs",
+      "input": "assist"
+    },
+    {
+      "type": "md",
+      "input": "Import Data"
+    },
+    {
+      "type": "cs",
+      "input": "importFiles\n"
+    },
+    {
+      "type": "cs",
+      "input": "importFiles [ \"https://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank.zip\" ]"
+    },
+    {
+      "type": "cs",
+      "input": "setupParse source_frames: [ \"https://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank.zip\" ]"
+    },
+    {
+      "type": "cs",
+      "input": "parseFiles\n  source_frames: [\"https://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank.zip\"]\n  destination_frame: \"bank.hex\"\n  parse_type: \"CSV\"\n  separator: 59\n  number_columns: 17\n  single_quotes: false\n  column_names: [\"age\",\"job\",\"marital\",\"education\",\"default\",\"balance\",\"housing\",\"loan\",\"contact\",\"day\",\"month\",\"duration\",\"campaign\",\"pdays\",\"previous\",\"poutcome\",\"y\"]\n  column_types: [\"Numeric\",\"Enum\",\"Enum\",\"Enum\",\"Enum\",\"Numeric\",\"Enum\",\"Enum\",\"Enum\",\"Enum\",\"Enum\",\"Numeric\",\"Numeric\",\"Numeric\",\"Numeric\",\"Enum\",\"Enum\"]\n  delete_on_done: true\n  check_header: 1\n  chunk_size: 219970"
+    },
+    {
+      "type": "cs",
+      "input": "getFrameSummary \"bank.hex\""
+    },
+    {
+      "type": "cs",
+      "input": "getColumnSummary \"bank.hex\", \"age\""
+    },
+    {
+      "type": "cs",
+      "input": "splitFrame"
+    },
+    {
+      "type": "cs",
+      "input": "splitFrame \"bank.hex\", [0.75], [\"Train\",\"Test\"], 338002"
+    },
+    {
+      "type": "cs",
+      "input": "getFrameSummary \"Train\""
+    },
+    {
+      "type": "cs",
+      "input": "getFrameSummary \"Train\""
+    },
+    {
+      "type": "cs",
+      "input": "buildModel \"glm\""
+    },
+    {
+      "type": "cs",
+      "input": "buildModel 'glm', {\"model_id\":\"glm-0277aa51-ef22-44ce-9a18-b6acc4b056c0\",\"training_frame\":\"Train\",\"validation_frame\":\"Test\",\"nfolds\":0,\"seed\":-1,\"response_column\":\"y\",\"ignored_columns\":[],\"random_columns\":[],\"ignore_const_cols\":true,\"family\":\"binomial\",\"rand_family\":[],\"solver\":\"AUTO\",\"alpha\":[],\"lambda\":[],\"lambda_search\":false,\"standardize\":true,\"non_negative\":false,\"startval\":[],\"calc_like\":false,\"HGLM\":false,\"obj_reg\":-1,\"score_each_iteration\":false,\"compute_p_values\":false,\"remove_collinear_columns\":false,\"max_iterations\":-1,\"link\":\"family_default\",\"rand_link\":[],\"max_runtime_secs\":0,\"missing_values_handling\":\"MeanImputation\",\"intercept\":true,\"objective_epsilon\":-1,\"beta_epsilon\":0.0001,\"gradient_epsilon\":-1,\"prior\":-1,\"max_active_predictors\":-1,\"interactions\":[],\"interaction_pairs\":[]}"
+    },
+    {
+      "type": "cs",
+      "input": "getModel \"glm-0277aa51-ef22-44ce-9a18-b6acc4b056c0\""
+    },
+    {
+      "type": "cs",
+      "input": "runAutoML"
+    },
+    {
+      "type": "cs",
+      "input": "runAutoML {\"build_control\":{\"project_name\":\"Business Analytics\",\"nfolds\":5,\"balance_classes\":true,\"stopping_criteria\":{\"seed\":-1,\"max_models\":0,\"max_runtime_secs\":100,\"max_runtime_secs_per_model\":0,\"stopping_rounds\":3,\"stopping_metric\":\"AUTO\",\"stopping_tolerance\":-1},\"class_sampling_factors\":[],\"max_after_balance_size\":5,\"keep_cross_validation_predictions\":true,\"keep_cross_validation_models\":true,\"keep_cross_validation_fold_assignment\":false},\"input_spec\":{\"training_frame\":\"Train\",\"response_column\":\"y\",\"validation_frame\":\"Test\",\"ignored_columns\":[],\"sort_metric\":\"AUTO\"},\"build_models\":{\"exclude_algos\":[],\"exploitation_ratio\":0,\"monotone_constraints\":[]}}, 'exec'"
+    },
+    {
+      "type": "cs",
+      "input": "getLeaderboard \"Business Analytics@@y\""
+    },
+    {
+      "type": "cs",
+      "input": "getLeaderboard \"Business Analytics@@y\""
+    },
+    {
+      "type": "cs",
+      "input": "getModel \"GLM_1_AutoML_20200902_175329\""
+    },
+    {
+      "type": "cs",
+      "input": "getModels"
+    },
+    {
+      "type": "cs",
+      "input": "predict model: \"GLM_1_AutoML_20200902_175329\""
+    },
+    {
+      "type": "cs",
+      "input": "predict model: \"GLM_1_AutoML_20200902_175329\", frame: \"Train\", predictions_frame: \"prediction-604324f5-46fc-4cce-b0ab-39eec0b3622e\""
+    }
+  ]
+}
